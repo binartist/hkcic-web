@@ -101,7 +101,7 @@ p > *:first-child {
 .time-label {
   color: grey;
   font-style: italic;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
 }
 
 .section-padding {

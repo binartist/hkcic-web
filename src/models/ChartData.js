@@ -21,13 +21,13 @@ export default class ChartData {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: data
+      data: data,
     });
 
     if (Array.isArray(aaa) && aaa.length >= 1 && aaa[0].length > 0) {
 
       datasets.push({
-        label: 'alert',
+        label: 'Alert',
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -51,7 +51,7 @@ export default class ChartData {
 
     if (Array.isArray(aaa) && aaa.length >= 2) {
       datasets.push({
-        label: 'alarm',
+        label: 'Alarm',
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -76,7 +76,7 @@ export default class ChartData {
     if (Array.isArray(aaa) && aaa.length >= 3) {
 
       datasets.push({
-        label: 'action',
+        label: 'Action',
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
