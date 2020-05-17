@@ -36,10 +36,13 @@ export default class Report extends Component {
       <h2>Device readings</h2>
       <h3>Rules configuration</h3>
       {this.generateRuleConfiguration()}
+      <span className='section-padding'/>
       <h3>Data analysis</h3>
       {this.state.reportDevices ? this.generateDataAnalysis() : null}
+      <span className='section-padding'/>
       <h3>Warnings</h3>
       {this.generateWarings()}
+      <span className='section-padding'/>
       <h3>Charts</h3>
       {this.state.chartDataCollection.map((item, index) => <div><p>{item.device}</p><LineChart key={index} data={item.data} /></div>)}
     </div>)

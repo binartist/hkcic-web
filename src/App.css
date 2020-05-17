@@ -44,6 +44,11 @@ h2, h3, p {
 table {
   width: 100%;
   text-align: left;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px lightgray solid;
 }
 
 p > * {
@@ -97,4 +102,9 @@ p > *:first-child {
   color: grey;
   font-style: italic;
   margin-left: 1rem;
+}
+
+.section-padding {
+  display: block;
+  margin-bottom: 4rem;
 }

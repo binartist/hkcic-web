@@ -3,7 +3,8 @@ import './App.css';
 import Report from './screens/Report';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8080/api/user';
+// axios.defaults.baseURL = 'http://localhost:8080/api/user';
+axios.defaults.baseURL = 'https://hkcic.creaxtive.com/api/user';
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 const params = new URLSearchParams(window.location.search);
 const date = params.get('date');
@@ -12,7 +13,7 @@ const date = params.get('date');
 function App() {
   return (
     <div className="App">
-      <h1>CIC Air Mornitoring Report</h1>
+      <h1>CIC Air Monitoring Report</h1>
       <Report date={date}/>
     </div>
   );
