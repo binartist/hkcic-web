@@ -349,15 +349,15 @@ export default class Report extends Component {
           let tempData = result.map(item => item['temperature']);
 
 
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), device: device['DeviceName'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), device: device['DeviceName'] });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), device: device['DeviceName'] + ' (PM2.5)' });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), device: device['DeviceName'] + ' (CO)' });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), device: device['DeviceName'] + ' (CO2)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), device: device['DeviceName'] + ' (C2H2)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), device: device['DeviceName'] + ' (TVOC)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), device: device['DeviceName'] + ' (Humidity)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), device: device['DeviceName'] + ' (Temperature)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), device: device['DeviceName'] + ' (PM10)'});
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), device: device['DeviceName'] + ' (PM100)'});
         }
 
         this.setState({ chartDataCollection: chartDataCollection });

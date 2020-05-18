@@ -9,6 +9,7 @@ axios.defaults.baseURL = 'https://hkcic.creaxtive.com/api/user';
 const params = new URLSearchParams(window.location.search);
 const date = params.get('date');
 // console.log(date);
+document.title = `Report ${date}`;
 
 function App() {
   return (
