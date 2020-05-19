@@ -8,19 +8,19 @@ export default class BarData {
             if (hourlyAlert[`${i}`] != null) {
                 alertData.push(hourlyAlert[`${i}`])
             } else {
-                alertData.push(0);
+                alertData.push(null);
             }
 
             if (hourlyAlarm[`${i}`] != null) {
                 alarmData.push(hourlyAlarm[`${i}`])
             } else {
-                alarmData.push(0);
+                alarmData.push(null);
             }
 
             if (hourlyAction[`${i}`] != null) {
                 actionData.push(hourlyAction[`${i}`])
             } else {
-                actionData.push(0);
+                actionData.push(null);
             }
         }
 
