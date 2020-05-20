@@ -294,7 +294,7 @@ export default class Report extends Component {
                   <td><span className={className}>{warningTitle}</span></td>
                   <td><span>{w['RecordCreated']}</span></td>
                   <td><span>{w['RecordUpdated']}</span></td>
-                  <td><span>{w['Duration']}</span></td>
+                  <td><span>{Math.round(w['Duration'])}</span></td>
                   <td><span>{w['Low']} to {w['High']}</span></td>
                 </tr>
               })}
