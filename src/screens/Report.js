@@ -27,22 +27,37 @@ export default class Report extends Component {
   }
 
   render() {
-    return (<div style={{ padding: '2rem' }}>
-      <h2>Project</h2>
-      <h3>Warning summary</h3>
+    return (<div>
+      <div style={{'page-break-before': 'always'}}></div>
+      <h2><span class="bgc_grey">Warning summary</span></h2>
       <BarChart data={this.state.barData} />
-      <h3>Devices</h3>
+      <span className='section-padding' />
+
+
+      <h2><span class="bgc_grey">Device Warning Record</span></h2>
       {this.generateDeviceTable()}
-      <h2>Device readings</h2>
-      <h3>Rules configuration</h3>
+      <p id="para_remark">Remarks:</p>
+      <p id="para_remark">Device A monitoring: CO2, PM2.5, TVOC, temperature and relative humidity</p>
+      <p id="para_remark">Device B monitoring: C2H2, CO, CO2, PM2.5, TVOC, temperature and relative humidity</p>
+      <span className='section-padding' />
+
+
+      <div style={{'page-break-before': 'always'}}></div>
+      <h2><span class="bgc_grey">Rules configuration</span></h2>
       {this.generateRuleConfiguration()}
       <span className='section-padding' />
+
+
       <h3>Data analysis</h3>
       {this.state.reportDevices ? this.generateDataAnalysis() : null}
       <span className='section-padding' />
+
+      <div style={{'page-break-before': 'always'}}></div>
       <h3>Warnings</h3>
       {this.generateWarings()}
       <span className='section-padding' />
+
+      <div style={{'page-break-before': 'always'}}></div>
       <h3>Charts</h3>
       {this.state.chartDataCollection.map((item, index) => <div><p>{item.device}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><span className='section-padding' /></div>)}
     </div>)
