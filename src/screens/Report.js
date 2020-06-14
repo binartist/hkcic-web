@@ -68,20 +68,22 @@ export default class Report extends Component {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Serial No.</th>
-          <th>Type</th>
-          <th>Warnings</th>
+          <th className='alert_cell'>Alert</th>
+          <th className='alarm_cell'>Alarm</th>
+          <th className='action_cell'>Action</th>
         </tr>
       </thead>
       <tbody>
         {this.state.devices.map(device => <tr>
           <td>{device.DeviceName}</td>
-          <td>{device.Serial}</td>
-          <td>All-in-one air Quality Sensor</td>
-          <td className='warning_group'>
-            <span>{device.AlertCount}</span>
-            <span>{device.AlarmCount}</span>
-            <span>{device.ActionCount}</span>
+          <td className='alert_cell'>
+            {device.AlertCount}
+          </td>  
+          <td className='alarm_cell'>
+            {device.AlarmCount}
+          </td>
+          <td className='action_cell'>
+            {device.ActionCount}
           </td>
 
         </tr>)}
@@ -107,8 +109,7 @@ export default class Report extends Component {
 
 
     return <div>
-      <p><span>Initialized time:</span><span>{this.state.projectConfig['thresholds_updated']}</span></p>
-      <p><span>Report sending rate:</span><span>{this.state.projectConfig['report_rate']}</span></p>
+      <br/>
       {aaa ? <table>
         <thead>
           <tr>
@@ -127,7 +128,7 @@ export default class Report extends Component {
         </thead>
         <tbody>
           <tr>
-            <td><span className='preset_level alert_level'>Alert</span></td>
+            <td className='alert_cell'><span>Alert</span></td>
             <td><span>{pm2p5Aaa[0]}</span></td>
             <td><span>{coAaa[0]}</span></td>
             <td><span>{co2Aaa[0]}</span></td>
@@ -140,7 +141,7 @@ export default class Report extends Component {
             <td><span>8-hour average</span></td>
           </tr>
           <tr>
-            <td><span className='preset_level alarm_level'>Alarm</span></td>
+            <td className='alarm_cell'><span>Alarm</span></td>
             <td><span>{pm2p5Aaa[1]}</span></td>
             <td><span>{coAaa[1]}</span></td>
             <td><span>{co2Aaa[1]}</span></td>
@@ -153,7 +154,7 @@ export default class Report extends Component {
             <td><span>1-hour average</span></td>
           </tr>
           <tr>
-            <td><span className='preset_level action_level'>Action</span></td>
+            <td className='action_cell'><span>Action</span></td>
             <td><span>{pm2p5Aaa[2]}</span></td>
             <td><span>{coAaa[2]}</span></td>
             <td><span>{co2Aaa[2]}</span></td>
@@ -286,27 +287,27 @@ export default class Report extends Component {
                 <th>From</th>
                 <th>to</th>
                 <th>Duration</th>
-                <th>Description</th>
+                <th>Range</th>
               </tr>
             </thead>
             <tbody>
               {warnings.map(w => {
                 let warningTitle;
-                let className = 'preset_level';
+                let className = '';
 
                 if (w['Type'] === 1) {
                   warningTitle = 'Alert';
-                  className += ' alert_level';
+                  className += ' alert_cell';
                 } else if (w['Type'] === 2) {
                   warningTitle = 'Alarm';
-                  className += ' alarm_level';
+                  className += ' alarm_cell';
                 } else {
                   warningTitle = 'Action';
-                  className += ' action_level';
+                  className += ' action_cell';
                 }
 
                 return <tr>
-                  <td><span className={className}>{warningTitle}</span></td>
+                  <td className={className}><span>{warningTitle}</span></td>
                   <td><span>{w['RecordCreated']}</span></td>
                   <td><span>{w['RecordUpdated']}</span></td>
                   <td><span>{Math.round(w['Duration'])}</span></td>

@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+@page {     
+  margin-top: 1cm;
+  margin-bottom: 1cm;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -78,6 +83,25 @@ p > *:first-child {
   background-color: red;
 }
 
+.alert_cell {
+  background-color: yellow;
+  color: black;
+  text-align: center;
+  width: 15%
+}
+
+.alarm_cell {
+  background-color: orange;
+  color: black;
+  text-align: center;
+  width: 15%
+}
+.action_cell {
+  background-color: rgba(255, 0, 0, 0.750);
+  color: black;
+  text-align: center;
+  width: 15%
+}
 .preset_level {
   text-align: center;
   display: inline-block;
