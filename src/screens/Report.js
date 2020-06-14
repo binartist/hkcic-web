@@ -5,7 +5,7 @@ import LineChart from '../components/LineChart';
 import BarChart from '../components/BarChart';
 import BarData from '../models/BarData';
 import _ from 'lodash';
-
+import './Report.css';
 
 export default class Report extends Component {
   constructor(props) {
