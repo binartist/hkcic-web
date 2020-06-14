@@ -14,8 +14,13 @@ document.title = `Report ${date}`;
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ padding: '2rem' }}>
+      <br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/><br/>
       <h1>CIC Air Monitoring Report</h1>
+      <p id="para_cover"> Issue date: <span className="time-label">{date}</span></p>
+      <br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/><br/>
       <Report date={date}/>
     </div>
   );
