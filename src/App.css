@@ -48,13 +48,21 @@ h2, h3, p {
 
 table {
   width: 100%;
-  text-align: left;
   border-collapse: collapse;
 }
 
-th, td {
+td {
   border: 1px lightgray solid;
+  padding: 6px;
+  text-align: center;
 }
+
+th{
+  border: 1px lightgray solid;
+  padding: 6px;
+  text-align: center;
+}
+
 
 p > * {
   display: inline-block;
@@ -120,6 +128,10 @@ p > *:first-child {
 
 .action_level {
   background-color: red;
+}
+
+.device_name {
+  text-align: left;
 }
 
 .time-label {

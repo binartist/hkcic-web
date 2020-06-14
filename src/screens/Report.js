@@ -29,12 +29,14 @@ export default class Report extends Component {
   render() {
     return (<div>
       <div style={{'page-break-before': 'always'}}></div>
-      <h2><span class="bgc_grey">Warning summary</span></h2>
+      <h2><span class="bgc_grey">Warning Summary</span></h2>
+      <br/>
       <BarChart data={this.state.barData} />
       <span className='section-padding' />
 
 
       <h2><span class="bgc_grey">Device Warning Record</span></h2>
+      <br/>
       {this.generateDeviceTable()}
       <p id="para_remark">Remarks:</p>
       <p id="para_remark">Device A monitoring: CO2, PM2.5, TVOC, temperature and relative humidity</p>
@@ -43,22 +45,26 @@ export default class Report extends Component {
 
 
       <div style={{'page-break-before': 'always'}}></div>
-      <h2><span class="bgc_grey">Rules configuration</span></h2>
+      <h2><span class="bgc_grey">Rules Configuration</span></h2>
+      <br/>
       {this.generateRuleConfiguration()}
       <span className='section-padding' />
 
 
-      <h3>Data analysis</h3>
+      <h3>Data Analysis</h3>
+      <br/>
       {this.state.reportDevices ? this.generateDataAnalysis() : null}
       <span className='section-padding' />
 
       <div style={{'page-break-before': 'always'}}></div>
       <h3>Warnings</h3>
+      <br/>
       {this.generateWarings()}
       <span className='section-padding' />
 
       <div style={{'page-break-before': 'always'}}></div>
       <h3>Charts</h3>
+      <br/>
       {this.state.chartDataCollection.map((item, index) => <div><p>{item.device}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><span className='section-padding' /></div>)}
     </div>)
   }
@@ -67,7 +73,7 @@ export default class Report extends Component {
     return <table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th className='device_name'>Device Name</th>
           <th className='alert_cell'>Alert</th>
           <th className='alarm_cell'>Alarm</th>
           <th className='action_cell'>Action</th>
@@ -75,7 +81,7 @@ export default class Report extends Component {
       </thead>
       <tbody>
         {this.state.devices.map(device => <tr>
-          <td>{device.DeviceName}</td>
+          <td className='device_name'>{device.DeviceName}</td>
           <td className='alert_cell'>
             {device.AlertCount}
           </td>  
@@ -109,20 +115,19 @@ export default class Report extends Component {
 
 
     return <div>
-      <br/>
       {aaa ? <table>
         <thead>
           <tr>
             <th>Pre-set level</th>
-            <th>PM2.5 (μg/m³)</th>
-            <th>CO (ppm)</th>
-            <th>CO<sub>2</sub> (ppm)</th>
-            <th>C<sub>2</sub>H<sub>2</sub> (ppm)</th>
-            <th>TVOC (mg/m³)</th>
-            <th>Humidity (%)</th>
-            <th>Temperature (℃)</th>
-            <th>PM10 (μg/m³)</th>
-            <th>PM100 (μg/m³)</th>
+            <th>PM2.5<br/><span className='time-label'>(μg/m³)</span></th>
+            <th>CO<br/><span className='time-label'>(ppm)</span></th>
+            <th>CO<sub>2</sub><br/><span className='time-label'>(ppm)</span></th>
+            <th>C<sub>2</sub>H<sub>2</sub><br/><span className='time-label'>(ppm)</span></th>
+            <th>TVOC<br/><span className='time-label'>(mg/m³)</span></th>
+            <th>Humidity<br/><span className='time-label'>(%)</span></th>
+            <th>Temperature<br/><span className='time-label'>(°C)</span></th>
+            <th>PM10<br/><span className='time-label'>(μg/m³)</span></th>
+            <th>PM100<br/><span className='time-label'>(μg/m³)</span></th>
             <th></th>
           </tr>
         </thead>
@@ -187,11 +192,11 @@ export default class Report extends Component {
       return <div><p>{device['DeviceName']}</p><table>
         <thead>
           <tr>
-            <th>Type</th>
+            <th>Data Type (Unit)</th>
             <th>Minimum</th>
             <th>Maximum</th>
             <th>Mean</th>
-            <th>Std</th>
+            <th>Std. Dev.</th>
           </tr>
         </thead>
         <tbody>
@@ -245,7 +250,7 @@ export default class Report extends Component {
             </tr> : null}
           {showTemp ?
             <tr>
-              <td><span>Temperature</span> (℃)</td>
+              <td><span>Temperature</span> (°C)</td>
               <td><span>{device['TemperatureMin']['Value']}</span><br /><span className='time-label'>{device['TemperatureMin']['Datetime']}</span></td>
               <td><span>{device['TemperatureMax']['Value']}</span><br /><span className='time-label'>{device['TemperatureMax']['Datetime']}</span></td>
               <td><span>{device['TemperatureMean']}</span></td>
@@ -285,7 +290,7 @@ export default class Report extends Component {
               <tr>
                 <th>Warning level</th>
                 <th>From</th>
-                <th>to</th>
+                <th>To</th>
                 <th>Duration</th>
                 <th>Range</th>
               </tr>
