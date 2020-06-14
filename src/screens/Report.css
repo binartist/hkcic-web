@@ -1,0 +1,14 @@
+.barchart::before {
+    content: 'Times';
+    position: absolute;
+    left: 0;
+    top: 30rem;
+    transform: rotate(-90deg);
+}
+
+/* .barchart::after {
+    content: 'Hour';
+    position: absolute;
+    bottom: -10rem;
+    left: 40rem;
+} */

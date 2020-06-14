@@ -5,7 +5,7 @@ import LineChart from '../components/LineChart';
 import BarChart from '../components/BarChart';
 import BarData from '../models/BarData';
 import _ from 'lodash';
-
+import './Report.css';
 
 export default class Report extends Component {
   constructor(props) {
@@ -30,7 +30,11 @@ export default class Report extends Component {
     return (<div style={{ padding: '2rem' }}>
       <h2>Project</h2>
       <h3>Warning summary</h3>
-      <BarChart data={this.state.barData} />
+      <div className='barchart'>
+        <BarChart data={this.state.barData} />
+        <p style={{textAlign: "center"}}>Time (HH)</p>
+      </div>
+      <span className='section-padding' />
       <h3>Devices</h3>
       {this.generateDeviceTable()}
       <h2>Device readings</h2>
