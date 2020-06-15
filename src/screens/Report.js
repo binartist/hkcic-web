@@ -28,44 +28,40 @@ export default class Report extends Component {
 
   render() {
     return (<div>
-      <div style={{'page-break-before': 'always'}}></div>
+      <div style={{ 'page-break-before': 'always' }}></div>
       <h2><span class="bgc_grey">Warning Summary</span></h2>
-      <br/>
+      <br />
       <BarChart data={this.state.barData} />
       <span className='section-padding' />
 
 
       <h2><span class="bgc_grey">Device Warning Record</span></h2>
-      <br/>
+      <br />
       {this.generateDeviceTable()}
       <p id="para_remark">Remarks:</p>
       <p id="para_remark">Device A monitoring: CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <p id="para_remark">Device B monitoring: C2H2, CO, CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <span className='section-padding' />
-
-
-      <div style={{'page-break-before': 'always'}}></div>
+      <div style={{ 'page-break-before': 'always' }}></div>
       <h2><span class="bgc_grey">Rules Configuration</span></h2>
-      <br/>
+      <br />
       {this.generateRuleConfiguration()}
       <span className='section-padding' />
 
 
-      <h3>Data Analysis</h3>
-      <br/>
-      {this.state.reportDevices ? this.generateDataAnalysis() : null}
-      <span className='section-padding' />
-
-      <div style={{'page-break-before': 'always'}}></div>
-      <h3>Warnings</h3>
-      <br/>
-      {this.generateWarings()}
-      <span className='section-padding' />
-
-      <div style={{'page-break-before': 'always'}}></div>
-      <h3>Charts</h3>
-      <br/>
-      {this.state.chartDataCollection.map((item, index) => <div><p>{item.device}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><span className='section-padding' /></div>)}
+      {this.state.chartDataCollection ? this.state.chartDataCollection.map((item, index) => {
+        return <div><h3>Data Analysis</h3>
+          <br />
+          {this.generateDataAnalysis(item.device)}
+          <span className='section-padding' />
+          {this.generateWarings(item.device)}
+          <span className='section-padding' />
+          <h3>Charts</h3>
+          <br />
+          {<div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><span className='section-padding' /></div>}
+          <div style={{ 'page-break-before': 'always' }}></div>
+        </div>
+      }) : null}
     </div>)
   }
 
@@ -84,7 +80,7 @@ export default class Report extends Component {
           <td className='device_name'>{device.DeviceName}</td>
           <td className='alert_cell'>
             {device.AlertCount}
-          </td>  
+          </td>
           <td className='alarm_cell'>
             {device.AlarmCount}
           </td>
@@ -119,15 +115,15 @@ export default class Report extends Component {
         <thead>
           <tr>
             <th>Pre-set level</th>
-            <th>PM2.5<br/><span className='time-label'>(μg/m³)</span></th>
-            <th>CO<br/><span className='time-label'>(ppm)</span></th>
-            <th>CO<sub>2</sub><br/><span className='time-label'>(ppm)</span></th>
-            <th>C<sub>2</sub>H<sub>2</sub><br/><span className='time-label'>(ppm)</span></th>
-            <th>TVOC<br/><span className='time-label'>(mg/m³)</span></th>
-            <th>Humidity<br/><span className='time-label'>(%)</span></th>
-            <th>Temperature<br/><span className='time-label'>(°C)</span></th>
-            <th>PM10<br/><span className='time-label'>(μg/m³)</span></th>
-            <th>PM100<br/><span className='time-label'>(μg/m³)</span></th>
+            <th>PM2.5<br /><span className='time-label'>(μg/m³)</span></th>
+            <th>CO<br /><span className='time-label'>(ppm)</span></th>
+            <th>CO<sub>2</sub><br /><span className='time-label'>(ppm)</span></th>
+            <th>C<sub>2</sub>H<sub>2</sub><br /><span className='time-label'>(ppm)</span></th>
+            <th>TVOC<br /><span className='time-label'>(mg/m³)</span></th>
+            <th>Humidity<br /><span className='time-label'>(%)</span></th>
+            <th>Temperature<br /><span className='time-label'>(°C)</span></th>
+            <th>PM10<br /><span className='time-label'>(μg/m³)</span></th>
+            <th>PM100<br /><span className='time-label'>(μg/m³)</span></th>
             <th></th>
           </tr>
         </thead>
@@ -176,115 +172,130 @@ export default class Report extends Component {
     </div>
   }
 
-  generateDataAnalysis() {
-    return this.state.reportDevices.map(device => {
-      const showPm2p5 = device['Pm2p5Min']['Value'] || device['Pm2p5Max']['Value'] || device['Pm2p5Mean'] || device['Pm2p5STD'];
-      const showCo = device['CoMin']['Value'] || device['CoMax']['Value'] || device['CoMean'] || device['CoSTD'];
-      const showCo2 = device['Co2Min']['Value'] || device['Co2Max']['Value'] || device['Co2Mean'] || device['Co2STD'];
-      const showC2h2 = device['C2h2Min']['Value'] || device['C2h2Max']['Value'] || device['C2h2Mean'] || device['C2h2STD'];
-      const showTvoc = device['TvocMin']['Value'] || device['TvocMax']['Value'] || device['TvocMean'] || device['TvocSTD'];
-      const showHum = device['HumidityMin']['Value'] || device['HumidityMax']['Value'] || device['HumidityMean'] || device['HumiditySTD'];
-      const showTemp = device['TemperatureMin']['Value'] || device['TemperatureMax']['Value'] || device['TemperatureMean'] || device['TemperatureSTD'];
-      const showPm10 = device['Pm10Min']['Value'] || device['Pm10Max']['Value'] || device['Pm10Mean'] || device['Pm10STD'];
-      const showPm100 = device['Pm100Min']['Value'] || device['Pm100Max']['Value'] || device['Pm100Mean'] || device['Pm100STD'];
+  generateDataAnalysis(device) {
+    const showPm2p5 = device['Pm2p5Min']['Value'] || device['Pm2p5Max']['Value'] || device['Pm2p5Mean'] || device['Pm2p5STD'];
+    const showCo = device['CoMin']['Value'] || device['CoMax']['Value'] || device['CoMean'] || device['CoSTD'];
+    const showCo2 = device['Co2Min']['Value'] || device['Co2Max']['Value'] || device['Co2Mean'] || device['Co2STD'];
+    const showC2h2 = device['C2h2Min']['Value'] || device['C2h2Max']['Value'] || device['C2h2Mean'] || device['C2h2STD'];
+    const showTvoc = device['TvocMin']['Value'] || device['TvocMax']['Value'] || device['TvocMean'] || device['TvocSTD'];
+    const showHum = device['HumidityMin']['Value'] || device['HumidityMax']['Value'] || device['HumidityMean'] || device['HumiditySTD'];
+    const showTemp = device['TemperatureMin']['Value'] || device['TemperatureMax']['Value'] || device['TemperatureMean'] || device['TemperatureSTD'];
+    const showPm10 = device['Pm10Min']['Value'] || device['Pm10Max']['Value'] || device['Pm10Mean'] || device['Pm10STD'];
+    const showPm100 = device['Pm100Min']['Value'] || device['Pm100Max']['Value'] || device['Pm100Mean'] || device['Pm100STD'];
 
 
-      return <div><p>{device['DeviceName']}</p><table>
-        <thead>
+    return <div><p>{device['DeviceName']}</p><table>
+      <thead>
+        <tr>
+          <th>Data Type (Unit)</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+          <th>Mean</th>
+          <th>Std. Dev.</th>
+        </tr>
+      </thead>
+      <tbody>
+        {showPm2p5 ? <tr>
+          <td><span>PM2.5 (μg/m³)</span></td>
+          <td><span>{device['Pm2p5Min']['Value']}</span><br /><span className='time-label'>{device['Pm2p5Min']['Datetime']}</span></td>
+          <td><span>{device['Pm2p5Max']['Value']}</span><br /><span className='time-label'>{device['Pm2p5Max']['Datetime']}</span></td>
+          <td><span>{device['Pm2p5Mean']}</span></td>
+          <td><span>{device['Pm2p5STD']}</span></td>
+        </tr> : null}
+        {showCo ?
           <tr>
-            <th>Data Type (Unit)</th>
-            <th>Minimum</th>
-            <th>Maximum</th>
-            <th>Mean</th>
-            <th>Std. Dev.</th>
-          </tr>
-        </thead>
-        <tbody>
-          {showPm2p5 ? <tr>
-            <td><span>PM2.5 (μg/m³)</span></td>
-            <td><span>{device['Pm2p5Min']['Value']}</span><br /><span className='time-label'>{device['Pm2p5Min']['Datetime']}</span></td>
-            <td><span>{device['Pm2p5Max']['Value']}</span><br /><span className='time-label'>{device['Pm2p5Max']['Datetime']}</span></td>
-            <td><span>{device['Pm2p5Mean']}</span></td>
-            <td><span>{device['Pm2p5STD']}</span></td>
+            <td><span>CO (ppm)</span></td>
+            <td><span>{device['CoMin']['Value']}</span><br /><span className='time-label'>{device['CoMin']['Datetime']}</span></td>
+            <td><span>{device['CoMax']['Value']}</span><br /><span className='time-label'>{device['CoMax']['Datetime']}</span></td>
+            <td><span>{device['CoMean']}</span></td>
+            <td><span>{device['CoTD']}</span></td>
+          </tr> : null
+        }
+        {showCo2 ?
+          <tr>
+            <td><span>CO<sub>2</sub> (ppm)</span></td>
+            <td><span>{device['Co2Min']['Value']}</span><br /><span className='time-label'>{device['Co2Min']['Datetime']}</span></td>
+            <td><span>{device['Co2Max']['Value']}</span><br /><span className='time-label'>{device['Co2Max']['Datetime']}</span></td>
+            <td><span>{device['Co2Mean']}</span></td>
+            <td><span>{device['Co2STD']}</span></td>
           </tr> : null}
-          {showCo ?
-            <tr>
-              <td><span>CO (ppm)</span></td>
-              <td><span>{device['CoMin']['Value']}</span><br /><span className='time-label'>{device['CoMin']['Datetime']}</span></td>
-              <td><span>{device['CoMax']['Value']}</span><br /><span className='time-label'>{device['CoMax']['Datetime']}</span></td>
-              <td><span>{device['CoMean']}</span></td>
-              <td><span>{device['CoTD']}</span></td>
-            </tr> : null
-          }
-          {showCo2 ?
-            <tr>
-              <td><span>CO<sub>2</sub> (ppm)</span></td>
-              <td><span>{device['Co2Min']['Value']}</span><br /><span className='time-label'>{device['Co2Min']['Datetime']}</span></td>
-              <td><span>{device['Co2Max']['Value']}</span><br /><span className='time-label'>{device['Co2Max']['Datetime']}</span></td>
-              <td><span>{device['Co2Mean']}</span></td>
-              <td><span>{device['Co2STD']}</span></td>
-            </tr> : null}
-          {showC2h2 ?
-            <tr>
-              <td><span>C<sub>2</sub>H<sub>2</sub> (ppm)</span></td>
-              <td><span>{device['C2h2Min']['Value']}</span><br /><span className='time-label'>{device['C2h2Min']['Datetime']}</span></td>
-              <td><span>{device['C2h2Max']['Value']}</span><br /><span className='time-label'>{device['C2h2Max']['Datetime']}</span></td>
-              <td><span>{device['C2h2Mean']}</span></td>
-              <td><span>{device['C2h2STD']}</span></td>
-            </tr> : null}
-          {showTvoc ?
-            <tr>
-              <td><span>TVOC</span> (mg/m³)</td>
-              <td><span>{device['TvocMin']['Value']}</span><br /><span className='time-label'>{device['TvocMin']['Datetime']}</span></td>
-              <td><span>{device['TvocMax']['Value']}</span><br /><span className='time-label'>{device['TvocMax']['Datetime']}</span></td>
-              <td><span>{device['TvocMean']}</span></td>
-              <td><span>{device['TvocSTD']}</span></td>
-            </tr> : null}
-          {showHum ?
-            <tr>
-              <td><span>Humidity</span> (%)</td>
-              <td><span>{device['HumidityMin']['Value']}</span><br /><span className='time-label'>{device['HumidityMin']['Datetime']}</span></td>
-              <td><span>{device['HumidityMax']['Value']}</span><br /><span className='time-label'>{device['HumidityMax']['Datetime']}</span></td>
-              <td><span>{device['HumidityMean']}</span></td>
-              <td><span>{device['HumiditySTD']}</span></td>
-            </tr> : null}
-          {showTemp ?
-            <tr>
-              <td><span>Temperature</span> (°C)</td>
-              <td><span>{device['TemperatureMin']['Value']}</span><br /><span className='time-label'>{device['TemperatureMin']['Datetime']}</span></td>
-              <td><span>{device['TemperatureMax']['Value']}</span><br /><span className='time-label'>{device['TemperatureMax']['Datetime']}</span></td>
-              <td><span>{device['TemperatureMean']}</span></td>
-              <td><span>{device['TemperatureSTD']}</span></td>
-            </tr> : null}
-          {showPm10 ?
-            <tr>
-              <td><span>PM10</span> (μg/m³)</td>
-              <td><span>{device['Pm10Min']['Value']}</span><br /><span className='time-label'>{device['Pm10Min']['Datetime']}</span></td>
-              <td><span>{device['Pm10Max']['Value']}</span><br /><span className='time-label'>{device['Pm10Max']['Datetime']}</span></td>
-              <td><span>{device['Pm10Mean']}</span></td>
-              <td><span>{device['Pm10STD']}</span></td>
-            </tr> : null}
-          {showPm100 ?
-            <tr>
-              <td><span>PM100</span> (μg/m³)</td>
-              <td><span>{device['Pm100Min']['Value']}</span><br /><span className='time-label'>{device['Pm100Min']['Datetime']}</span></td>
-              <td><span>{device['Pm100Max']['Value']}</span><br /><span className='time-label'>{device['Pm100Max']['Datetime']}</span></td>
-              <td><span>{device['Pm100Mean']}</span></td>
-              <td><span>{device['Pm100STD']}</span></td>
-            </tr> : null}
-        </tbody>
-      </table></div>
-    });
+        {showC2h2 ?
+          <tr>
+            <td><span>C<sub>2</sub>H<sub>2</sub> (ppm)</span></td>
+            <td><span>{device['C2h2Min']['Value']}</span><br /><span className='time-label'>{device['C2h2Min']['Datetime']}</span></td>
+            <td><span>{device['C2h2Max']['Value']}</span><br /><span className='time-label'>{device['C2h2Max']['Datetime']}</span></td>
+            <td><span>{device['C2h2Mean']}</span></td>
+            <td><span>{device['C2h2STD']}</span></td>
+          </tr> : null}
+        {showTvoc ?
+          <tr>
+            <td><span>TVOC</span> (mg/m³)</td>
+            <td><span>{device['TvocMin']['Value']}</span><br /><span className='time-label'>{device['TvocMin']['Datetime']}</span></td>
+            <td><span>{device['TvocMax']['Value']}</span><br /><span className='time-label'>{device['TvocMax']['Datetime']}</span></td>
+            <td><span>{device['TvocMean']}</span></td>
+            <td><span>{device['TvocSTD']}</span></td>
+          </tr> : null}
+        {showHum ?
+          <tr>
+            <td><span>Humidity</span> (%)</td>
+            <td><span>{device['HumidityMin']['Value']}</span><br /><span className='time-label'>{device['HumidityMin']['Datetime']}</span></td>
+            <td><span>{device['HumidityMax']['Value']}</span><br /><span className='time-label'>{device['HumidityMax']['Datetime']}</span></td>
+            <td><span>{device['HumidityMean']}</span></td>
+            <td><span>{device['HumiditySTD']}</span></td>
+          </tr> : null}
+        {showTemp ?
+          <tr>
+            <td><span>Temperature</span> (°C)</td>
+            <td><span>{device['TemperatureMin']['Value']}</span><br /><span className='time-label'>{device['TemperatureMin']['Datetime']}</span></td>
+            <td><span>{device['TemperatureMax']['Value']}</span><br /><span className='time-label'>{device['TemperatureMax']['Datetime']}</span></td>
+            <td><span>{device['TemperatureMean']}</span></td>
+            <td><span>{device['TemperatureSTD']}</span></td>
+          </tr> : null}
+        {showPm10 ?
+          <tr>
+            <td><span>PM10</span> (μg/m³)</td>
+            <td><span>{device['Pm10Min']['Value']}</span><br /><span className='time-label'>{device['Pm10Min']['Datetime']}</span></td>
+            <td><span>{device['Pm10Max']['Value']}</span><br /><span className='time-label'>{device['Pm10Max']['Datetime']}</span></td>
+            <td><span>{device['Pm10Mean']}</span></td>
+            <td><span>{device['Pm10STD']}</span></td>
+          </tr> : null}
+        {showPm100 ?
+          <tr>
+            <td><span>PM100</span> (μg/m³)</td>
+            <td><span>{device['Pm100Min']['Value']}</span><br /><span className='time-label'>{device['Pm100Min']['Datetime']}</span></td>
+            <td><span>{device['Pm100Max']['Value']}</span><br /><span className='time-label'>{device['Pm100Max']['Datetime']}</span></td>
+            <td><span>{device['Pm100Mean']}</span></td>
+            <td><span>{device['Pm100STD']}</span></td>
+          </tr> : null}
+      </tbody>
+    </table></div>
   }
 
-  generateWarings() {
-    const tables = [];
-    let warnings;
-    for (let topic in this.state.warningCollection) {
-      warnings = this.state.warningCollection[topic];
-      tables.push(
+  generateWarings(device) {
+    let warnings = this.state.warningCollection[device.DeviceID];
+
+    if (warnings) {
+      let warning = warnings[0];
+      let warningTitle;
+      let className = '';
+
+      let w = warning;
+      if (w['Type'] === 1) {
+        warningTitle = 'Alert';
+        className += ' alert_cell';
+      } else if (w['Type'] === 2) {
+        warningTitle = 'Alarm';
+        className += ' alarm_cell';
+      } else {
+        warningTitle = 'Action';
+        className += ' action_cell';
+      }
+
+      return (
         <div>
-          <p><strong>{topic}</strong></p>
+          <h3>Warnings</h3>
+          <br />
+          <p><strong>{warning.Topic}</strong></p>
           <table>
             <thead>
               <tr>
@@ -296,36 +307,21 @@ export default class Report extends Component {
               </tr>
             </thead>
             <tbody>
-              {warnings.map(w => {
-                let warningTitle;
-                let className = '';
-
-                if (w['Type'] === 1) {
-                  warningTitle = 'Alert';
-                  className += ' alert_cell';
-                } else if (w['Type'] === 2) {
-                  warningTitle = 'Alarm';
-                  className += ' alarm_cell';
-                } else {
-                  warningTitle = 'Action';
-                  className += ' action_cell';
-                }
-
-                return <tr>
+              {
+                <tr>
                   <td className={className}><span>{warningTitle}</span></td>
                   <td><span>{w['RecordCreated']}</span></td>
                   <td><span>{w['RecordUpdated']}</span></td>
                   <td><span>{Math.round(w['Duration'])}</span></td>
                   <td><span>{w['Low']} to {w['High']}</span></td>
                 </tr>
-              })}
+
+              }
             </tbody>
           </table>
         </div>
       )
     }
-
-    return tables;
   }
 
   async updateWaringSummary() {
@@ -339,10 +335,10 @@ export default class Report extends Component {
       // const hourlyAction = project['HourlyAction'];
 
       // this.setState({ barData: BarData.fromData({ hourlyAlert, hourlyAlarm, hourlyAction }) });
-      this.setState({barData: BarData.fromData(project.Devices)});
+      this.setState({ barData: BarData.fromData(project.Devices) });
       this.setState({ devices: project.Devices });
 
-      const warnings = _.groupBy(project['Warnings'], 'Topic');
+      const warnings = _.groupBy(project['Warnings'], 'DeviceID');
       this.setState({ warningCollection: warnings });
     } catch (e) {
       console.log(e)
@@ -374,7 +370,7 @@ export default class Report extends Component {
     const humAaa = aaa['hum_aaa'].split(',');
     const tempAaa = aaa['temp_aaa'].split(',');
 
-    this.setState({ reportDevices: project['Devices'] });
+    // this.setState({ reportDevices: project['Devices'] });
 
     for (let device of project['Devices']) {
       axios.post(`chartreport/${device['DeviceID']}/${this.date}`).then(res => {
@@ -392,15 +388,15 @@ export default class Report extends Component {
           let tempData = result.map(item => item['temperature']);
 
 
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), device: device['DeviceName'] + ' (PM2.5)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), device: device['DeviceName'] + ' (CO)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), device: device['DeviceName'] + ' (CO2)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), device: device['DeviceName'] + ' (C2H2)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), device: device['DeviceName'] + ' (TVOC)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), device: device['DeviceName'] + ' (Humidity)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), device: device['DeviceName'] + ' (Temperature)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), device: device['DeviceName'] + ' (PM10)' });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), device: device['DeviceName'] + ' (PM100)' });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), label: device['DeviceName'] + ' (PM2.5)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), label: device['DeviceName'] + ' (CO2)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), label: device['DeviceName'] + ' (TVOC)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device });
         }
 
         this.setState({ chartDataCollection: chartDataCollection });
