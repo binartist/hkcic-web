@@ -9,10 +9,12 @@ const params = new URLSearchParams(window.location.search);
 const date = params.get('date');
 const open_in = params.get('open_in');
 
-if (open_in === 'browser') {
-  axios.defaults.baseURL = 'https://hkcic.creaxtive.com/api/user';
-} else {
+if (open_in === 'headless-browser') {
   axios.defaults.baseURL = 'http://web-server/api/user';
+} else if (open_in === 'dev-host') {
+  axios.defaults.baseURL = 'http://localhost:8080/api/user';
+} else {
+  axios.defaults.baseURL = 'https://hkcic.creaxtive.com/api/user';
 }
 
 // console.log(date);
