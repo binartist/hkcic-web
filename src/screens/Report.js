@@ -334,11 +334,12 @@ export default class Report extends Component {
     try {
       const project = res.data['projects']['1'];
 
-      const hourlyAlert = project['HourlyAlert'];
-      const hourlyAlarm = project['HourlyAlarm'];
-      const hourlyAction = project['HourlyAction'];
+      // const hourlyAlert = project['HourlyAlert'];
+      // const hourlyAlarm = project['HourlyAlarm'];
+      // const hourlyAction = project['HourlyAction'];
 
-      this.setState({ barData: BarData.fromData({ hourlyAlert, hourlyAlarm, hourlyAction }) });
+      // this.setState({ barData: BarData.fromData({ hourlyAlert, hourlyAlarm, hourlyAction }) });
+      this.setState({barData: BarData.fromData(project.Devices)});
       this.setState({ devices: project.Devices });
 
       const warnings = _.groupBy(project['Warnings'], 'Topic');

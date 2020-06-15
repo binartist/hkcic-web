@@ -1,28 +1,36 @@
 export default class BarData {
-    static fromData({ hourlyAlert, hourlyAlarm, hourlyAction }) {
+    static fromData(devices) {
         const datasets = [];
 
         let [alertData, alarmData, actionData] = [[], [], []];
+        let deviceNames = [];
 
-        for (let i = 0; i < 24; i++) {
-            if (hourlyAlert[`${i}`] != null) {
-                alertData.push(hourlyAlert[`${i}`])
-            } else {
-                alertData.push(null);
-            }
 
-            if (hourlyAlarm[`${i}`] != null) {
-                alarmData.push(hourlyAlarm[`${i}`])
-            } else {
-                alarmData.push(null);
-            }
+        devices.forEach(dev => {
+            alertData.push(dev.AlertCount)
+            alarmData.push(dev.AlarmCount)
+            actionData.push(dev.ActionCount)
+            deviceNames.push(dev.DeviceName)
+        });
+        // for (let i = 0; i < 24; i++) {
+        //     if (hourlyAlert[`${i}`] != null) {
+        //         alertData.push(hourlyAlert[`${i}`])
+        //     } else {
+        //         alertData.push(null);
+        //     }
 
-            if (hourlyAction[`${i}`] != null) {
-                actionData.push(hourlyAction[`${i}`])
-            } else {
-                actionData.push(null);
-            }
-        }
+        //     if (hourlyAlarm[`${i}`] != null) {
+        //         alarmData.push(hourlyAlarm[`${i}`])
+        //     } else {
+        //         alarmData.push(null);
+        //     }
+
+        //     if (hourlyAction[`${i}`] != null) {
+        //         actionData.push(hourlyAction[`${i}`])
+        //     } else {
+        //         actionData.push(null);
+        //     }
+        // }
 
         // console.log(alertData, alarmData, actionData)
 
@@ -57,7 +65,7 @@ export default class BarData {
         })
 
         return {
-            labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+            labels: deviceNames,
             datasets: datasets
         }
     }
