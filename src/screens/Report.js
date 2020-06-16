@@ -58,13 +58,16 @@ export default class Report extends Component {
           <div style={{ 'page-break-before': 'always' }}></div>
           <h3><strong>Charts</strong></h3>
           {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
-            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Time (Hour)</p><br />
+            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Time (Hour)</p>
+            <br/><br/><br/><br/><br/><br/>
             </div>
           }) : null}
           <div style={{ 'page-break-before': 'always' }}></div>
         </div>
       }) : null}
+      <h2 style={{'text-align': 'center'}}>~ End of Report ~</h2>
     </div>)
+    
   }
 
   generateDeviceTable() {

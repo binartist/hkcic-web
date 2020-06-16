@@ -4,7 +4,7 @@ export default class ChartData {
 
     datasets.push({
       label: label,
-      fill: false,
+      fill: true,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',

@@ -15,6 +15,15 @@ export default function (props) {
                         },
                     }
                 ],
+
+                xAxes: [
+                    {
+                        ticks: {
+                            fontSize: 10
+                        }
+                    }
+                ],
+
                 scaleLabel: {
                     labelString: 'fsfsfs'
                 }
