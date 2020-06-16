@@ -29,13 +29,13 @@ export default class Report extends Component {
   render() {
     return (<div>
       <div style={{ 'page-break-before': 'always' }}></div>
-      <h2><span class="bgc_grey">Warning Summary</span></h2>
+      <h2><span class="heading_2">Warning Summary</span></h2>
       <br />
       <BarChart data={this.state.barData} />
       <span className='section-padding' />
 
 
-      <h2><span class="bgc_grey">Device Warning Record</span></h2>
+      <h2><span class="heading_2">Device Warning Record</span></h2>
       <br />
       {this.generateDeviceTable()}
       <p id="para_remark">Remarks:</p>
@@ -43,7 +43,7 @@ export default class Report extends Component {
       <p id="para_remark">Device B monitoring: C2H2, CO, CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <span className='section-padding' />
       <div style={{ 'page-break-before': 'always' }}></div>
-      <h2><span class="bgc_grey">Rules Configuration</span></h2>
+      <h2><span class="heading_2">Rules Configuration</span></h2>
       <br />
       {this.generateRuleConfiguration()}
       <span className='section-padding' />
@@ -187,7 +187,11 @@ export default class Report extends Component {
     const showPm100 = device['Pm100Min']['Value'] || device['Pm100Max']['Value'] || device['Pm100Mean'] || device['Pm100STD'];
 
 
-    return <div><p>{device['DeviceName']}</p><table>
+    return <div>
+    <h2><span className='heading_2'>{device['DeviceName']}</span></h2>
+    <br/>
+    <h3><strong>Data Analysis</strong></h3>
+    <table>
       <thead>
         <tr>
           <th>Data Type (Unit)</th>
@@ -296,9 +300,8 @@ export default class Report extends Component {
 
       return (
         <div>
-          <h3>Warnings</h3>
-          <br />
-          <p><strong>{warning.Topic}</strong></p>
+          <h3><strong>Warnings</strong></h3>
+          <p>{warning.Topic}</p>
           <table>
             <thead>
               <tr>
