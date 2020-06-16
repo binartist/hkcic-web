@@ -51,18 +51,17 @@ export default class Report extends Component {
 
       {this.state.reportDevices ? this.state.reportDevices.map((device) => {
         return <div>
-          <h2>{device.DeviceName}</h2>
-          <h3>Data Analysis</h3>
-          <br />
           {this.generateDataAnalysis(device)}
           <span className='section-padding' />
           {this.generateWarings(device)}
           <span className='section-padding' />
-          <h3>Charts</h3>
+          <div style={{ 'page-break-before': 'always' }}></div>
+          <h3><strong>Charts</strong></h3>
           {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
-            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><br />
+            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Time (Hour)</p><br />
             </div>
           }) : null}
+          <div style={{ 'page-break-before': 'always' }}></div>
         </div>
       }) : null}
     </div>)
@@ -308,7 +307,7 @@ export default class Report extends Component {
                 <th>Warning level</th>
                 <th>From</th>
                 <th>To</th>
-                <th>Duration</th>
+                <th>Duration<br /><span className='time-label'>(min)</span></th>
                 <th>Range</th>
               </tr>
             </thead>
