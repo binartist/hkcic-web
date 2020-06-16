@@ -10,7 +10,7 @@ export default class BarData {
             alertData.push(dev.AlertCount)
             alarmData.push(dev.AlarmCount)
             actionData.push(dev.ActionCount)
-            deviceNames.push(dev.DeviceName)
+            deviceNames.push(formatLabel(dev.DeviceName, 12))
         });
         // for (let i = 0; i < 24; i++) {
         //     if (hourlyAlert[`${i}`] != null) {
@@ -69,4 +69,52 @@ export default class BarData {
             datasets: datasets
         }
     }
+}
+
+/* takes a string phrase and breaks it into separate phrases 
+   no bigger than 'maxwidth', breaks are made at complete words.*/
+
+   function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
+
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+        }
+
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
 }
