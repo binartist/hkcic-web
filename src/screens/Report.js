@@ -12,7 +12,7 @@ export default class Report extends Component {
     super(props);
 
     this.date = this.props.date;
-    this.state = { chartDataCollection: [], barData: {}, devices: [], projectConfig: {}, aaa: null, warningCollection: {}, reportDevices: null };
+    this.state = { chartDataDict: [], barData: {}, devices: [], projectConfig: {}, aaa: null, warningCollection: {}, reportDevices: null };
   }
 
   async componentDidMount() {
@@ -49,17 +49,20 @@ export default class Report extends Component {
       <span className='section-padding' />
 
 
-      {this.state.chartDataCollection ? this.state.chartDataCollection.map((item, index) => {
-        return <div><h3>Data Analysis</h3>
+      {this.state.reportDevices ? this.state.reportDevices.map((device) => {
+        return <div>
+          <h2>{device.DeviceName}</h2>
+          <h3>Data Analysis</h3>
           <br />
-          {this.generateDataAnalysis(item.device)}
+          {this.generateDataAnalysis(device)}
           <span className='section-padding' />
-          {this.generateWarings(item.device)}
+          {this.generateWarings(device)}
           <span className='section-padding' />
           <h3>Charts</h3>
-          <br />
-          {<div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><span className='section-padding' /></div>}
-          <div style={{ 'page-break-before': 'always' }}></div>
+          {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
+            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Hour</p><br />
+            </div>
+          }) : null}
         </div>
       }) : null}
     </div>)
@@ -356,7 +359,6 @@ export default class Report extends Component {
   async updateChartDataCollection() {
     const res = await axios.post(`dailyreport/${this.date}`);
 
-    let chartDataCollection = [];
 
     const project = res.data['projects']['1'];
     const aaa = project['AlertAlarmAction'];
@@ -370,10 +372,12 @@ export default class Report extends Component {
     const humAaa = aaa['hum_aaa'].split(',');
     const tempAaa = aaa['temp_aaa'].split(',');
 
-    // this.setState({ reportDevices: project['Devices'] });
+    this.setState({ reportDevices: project['Devices'] });
 
+    let chartDataDict = {};
     for (let device of project['Devices']) {
       axios.post(`chartreport/${device['DeviceID']}/${this.date}`).then(res => {
+        let chartDataCollection = [];
 
         let result = res.data['result'];
         if (Array.isArray(result)) {
@@ -397,9 +401,10 @@ export default class Report extends Component {
           chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device });
           chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device });
           chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device });
-        }
 
-        this.setState({ chartDataCollection: chartDataCollection });
+          chartDataDict[device.DeviceID] = chartDataCollection;
+          this.setState({ chartDataDict});
+        }
       });
     }
   }
