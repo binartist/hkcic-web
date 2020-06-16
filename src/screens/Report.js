@@ -56,10 +56,8 @@ export default class Report extends Component {
           <span className='section-padding' />
           {this.generateWarings(item.device)}
           <span className='section-padding' />
-          <h3>Charts</h3>
-          <br />
+          <h3><strong>Charts</strong></h3>
           {<div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Time (Hour)</p><span className='section-padding' /></div>}
-          <div style={{ 'page-break-before': 'always' }}></div>
         </div>
       }) : null}
     </div>)
@@ -184,11 +182,10 @@ export default class Report extends Component {
     const showPm100 = device['Pm100Min']['Value'] || device['Pm100Max']['Value'] || device['Pm100Mean'] || device['Pm100STD'];
 
 
-    return <div style={{ 'page-break-before': 'always' }}>
+    return <div>
     <h2><span className='heading_2'>{device['DeviceName']}</span></h2>
     <br/>
-    <h3>Data Analysis</h3>
-    <br/>
+    <h3><strong>Data Analysis</strong></h3>
     <table>
       <thead>
         <tr>
@@ -298,9 +295,8 @@ export default class Report extends Component {
 
       return (
         <div>
-          <h3>Warnings</h3>
-          <br />
-          <p><strong>{warning.Topic}</strong></p>
+          <h3><strong>Warnings</strong></h3>
+          <p>{warning.Topic}</p>
           <table>
             <thead>
               <tr>
