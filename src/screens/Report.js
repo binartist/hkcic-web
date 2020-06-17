@@ -314,7 +314,7 @@ export default class Report extends Component {
             className += ' action_cell';
           }
 
-          return <div><p>{w.Topic}</p>
+        return <div><p>{w.Topic} ({w.Unit})</p>
             <table>
               <thead>
                 <tr>
