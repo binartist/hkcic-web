@@ -7,6 +7,18 @@ import BarData from '../models/BarData';
 import _ from 'lodash';
 import './Report.css';
 
+const unitDict = {
+  'PM2.5': 'μg/m³',
+  'CO': 'ppm',
+  'CO2': 'ppm',
+  'C2H2': 'ppm',
+  'TVOC': 'mg/m³',
+  'Humidity': '%',
+  'Temperature': '°C',
+  'PM10': 'μg/m³',
+  'PM100': 'μg/m³'
+}
+
 export default class Report extends Component {
   constructor(props) {
     super(props);
@@ -50,7 +62,7 @@ export default class Report extends Component {
 
 
       {this.state.reportDevices ? this.state.reportDevices.map((device) => {
-        return <div style={{'page-break-before': 'always'}}>
+        return <div style={{ 'page-break-before': 'always' }}>
           {this.generateDataAnalysis(device)}
           <span className='section-padding' />
           {this.generateWarings(device)}
@@ -58,16 +70,15 @@ export default class Report extends Component {
           <div style={{ 'page-break-before': 'always' }}></div>
           <h3><strong>Charts</strong></h3>
           {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
-            return <div style={{'page-break-inside': 'avoid'}}>
+            return <div style={{ 'page-break-inside': 'avoid' }}>
               <p>{item.label}</p>
-              <LineChart key={index} data={item.data} />
-              <p style={{ textAlign: "center" }}>Time (Hour)</p>
-              <br/><br/><br/>
+              <LineChart key={index} data={item.data} yUnit={item.unit}/>
+              <br /><br /><br />
             </div>
           }) : null}
         </div>
       }) : null}
-      <h4 style={{'text-align': 'center'}}>- End of Report -</h4>
+      <h4 style={{ 'text-align': 'center' }}>- End of Report -</h4>
     </div>)
 
   }
@@ -398,23 +409,23 @@ export default class Report extends Component {
           let tempData = result.map(item => item['temperature']);
 
 
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), label: device['DeviceName'] + ' (PM2.5)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), label: device['DeviceName'] + ' (PM2.5)', device, unit: unitDict['PM2.5'] });
 
           if (device.CoMax.Value > 0) {
-            chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device });
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device, unit: unitDict['CO'] });
           }
 
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), label: device['DeviceName'] + ' (CO2)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), label: device['DeviceName'] + ' (CO2)', device, unit: unitDict['CO2'] });
 
           if (device.C2h2Max.Value > 0) {
-            chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device });
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device, unit: unitDict['C2H2'] });
           }
 
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), label: device['DeviceName'] + ' (TVOC)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), label: device['DeviceName'] + ' (TVOC)', device, unit: unitDict['TVOC'] });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device, unit: unitDict['Humidity'] });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device, unit: unitDict['Temperature'] });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device, unit: unitDict['PM10'] });
+          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device, unit: unitDict['PM100'] });
 
           chartDataDict[device.DeviceID] = chartDataCollection;
           this.setState({ chartDataDict });
