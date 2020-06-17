@@ -72,8 +72,8 @@ export default class Report extends Component {
           {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
             return <div style={{ 'page-break-inside': 'avoid' }}>
               <p>{item.label}</p>
-              <LineChart key={index} data={item.data} yUnit={item.unit}/>
-              <br /><br /><br />
+              <LineChart key={index} data={item.data} yUnit={'(' + item.unit + ')'} />
+              <span className='section-padding' />
             </div>
           }) : null}
         </div>
@@ -297,7 +297,7 @@ export default class Report extends Component {
     let warnings = this.state.warningCollection[device.DeviceID];
 
     return (
-      <div>
+      <div style={{ 'page-break-inside': 'avoid' }}>
         <h3><strong>Warnings</strong></h3>
         {warnings ? warnings.map(w => {
           let warningTitle;
@@ -318,11 +318,11 @@ export default class Report extends Component {
             <table>
               <thead>
                 <tr>
-                  <th>Warning level</th>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Duration<br /><span className='time-label'>(min)</span></th>
-                  <th>Range</th>
+                  <th style={{'width':'15%'}}>Warning level</th>
+                  <th style={{'width':'25%'}}>From</th>
+                  <th style={{'width':'25%'}}>To</th>
+                  <th style={{'width':'12%'}}>Duration<br /><span className='time-label'>(min)</span></th>
+                  <th style={{'width':'23%'}}>Range<br /><span className='time-label'>({w.Unit})</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -337,7 +337,8 @@ export default class Report extends Component {
 
                 }
               </tbody>
-            </table></div>
+            </table><br/>
+          </div>
         }) : <p>All readings were normal in the selected period.</p>
         }
       </div>

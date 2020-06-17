@@ -7,8 +7,8 @@ export default function (props) {
       responsive: true,
       layout: {
         padding: {
-          left: 0,
-          right: 50,
+          left: 50,
+          right: 100,
           top: 0,
           bottom: 0
         }
@@ -18,12 +18,14 @@ export default function (props) {
           scaleLabel: {
             display: true,
             labelString: 'Time (Hour)',
+            fontSize: 15
           }
         }],
         yAxes: [{
           scaleLabel: {
             display: true,
             labelString: props.yUnit,
+            fontSize: 15
           }
         }]
       }
