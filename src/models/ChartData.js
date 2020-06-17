@@ -45,7 +45,7 @@ export default class ChartData {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0]]
+        data: [aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0], aaa[0]]
       });
     }
 
@@ -69,7 +69,7 @@ export default class ChartData {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1]]
+        data: [aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1], aaa[1]]
       });
     }
 
@@ -94,13 +94,13 @@ export default class ChartData {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2]]
+        data: [aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2], aaa[2]]
       });
     }
 
 
     return {
-      labels: ['00', '02', '04', '08', '10', '12', '14', '16', '18', '20', '22', '24'],
+      labels: ['00', '02', '04', '06', '08', '10', '12', '14', '16', '18', '20', '22', '24'],
       datasets: datasets
     }
   }
