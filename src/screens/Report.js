@@ -50,7 +50,7 @@ export default class Report extends Component {
 
 
       {this.state.reportDevices ? this.state.reportDevices.map((device) => {
-        return <div>
+        return <div style={{'page-break-before': 'always'}}>
           {this.generateDataAnalysis(device)}
           <span className='section-padding' />
           {this.generateWarings(device)}
@@ -58,14 +58,16 @@ export default class Report extends Component {
           <div style={{ 'page-break-before': 'always' }}></div>
           <h3><strong>Charts</strong></h3>
           {this.state.chartDataDict[device.DeviceID] ? this.state.chartDataDict[device.DeviceID].map((item, index) => {
-            return <div><p>{item.label}</p><LineChart key={index} data={item.data} /><p style={{ textAlign: "center" }}>Time (Hour)</p>
-            <br/><br/><br/><br/><br/><br/>
+            return <div style={{'page-break-inside': 'avoid'}}>
+              <p>{item.label}</p>
+              <LineChart key={index} data={item.data} />
+              <p style={{ textAlign: "center" }}>Time (Hour)</p>
+              <br/><br/><br/>
             </div>
           }) : null}
-          <div style={{ 'page-break-before': 'always' }}></div>
         </div>
       }) : null}
-      <h4 style={{'text-align': 'center'}}>~ End of Report ~</h4>
+      <h4 style={{'text-align': 'center'}}>- End of Report -</h4>
     </div>)
     
   }
