@@ -65,7 +65,7 @@ export default class Report extends Component {
           <div style={{ 'page-break-before': 'always' }}></div>
         </div>
       }) : null}
-      <h2 style={{'text-align': 'center'}}>~ End of Report ~</h2>
+      <h4 style={{'text-align': 'center'}}>~ End of Report ~</h4>
     </div>)
     
   }
@@ -398,9 +398,17 @@ export default class Report extends Component {
 
 
           chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), label: device['DeviceName'] + ' (PM2.5)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device });
+
+          if (!isNull(device.CoMax.Value) && device.CoMax.Value > 0) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device });
+          }
+
           chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), label: device['DeviceName'] + ' (CO2)', device });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device });
+
+          if (!isNull(device.C2h2Max.Value) && device.C2h2Max.Value > 0) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device });
+          }
+          
           chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), label: device['DeviceName'] + ' (TVOC)', device });
           chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device });
           chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device });
