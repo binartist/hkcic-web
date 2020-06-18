@@ -26,9 +26,23 @@ function App() {
       <br/><br/><br/><br/><br/>
       <br/><br/><br/><br/><br/>
       <h1>CIC Air Monitoring Report</h1>
+      <br/>
       <p id="para_cover"> Issue date: <span className="time-label">{date}</span></p>
       <br/><br/><br/><br/><br/>
       <br/><br/><br/><br/><br/>
+      <div className="noScreen">
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <p id="para_cover_note">Requested by: AirHK CIC</p>
+        <p id="para_cover_note">Prepared for: HKCITTC</p>
+        <p id="para_cover_note">Report period: From {date} 00:00 to {date} 23:59</p>
+      </div>
+
       <Report date={date}/>
     </div>
   );

@@ -18,6 +18,18 @@
   }
 }
 
+@media screen
+{
+    .noPrint{}
+    .noScreen{display:none;}
+}
+
+@media print
+{
+    .noPrint{display:none;}
+    .noScreen{}
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

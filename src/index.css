@@ -21,7 +21,7 @@ h1, h2, h3, h4, h5, h6, p {
 h1 {
   color: black;
   font-family: Helvetica;
-  font-size: 350%;
+  font-size: 400%;
   text-align: left;
   padding: 0px;
 }
@@ -44,7 +44,14 @@ h3 {
 #para_cover {
   color: black;
   font-family: Helvetica;
+  font-size: 200%;
+}
+
+#para_cover_note {
+  color: rgba(90, 90, 90, 0.651);
+  font-family: Helvetica;
   font-size: 150%;
+  text-align: right;
 }
 
 #para_remark {

@@ -54,7 +54,6 @@ export default class Report extends Component {
       <p id="para_remark">Device A monitoring: CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <p id="para_remark">Device B monitoring: C2H2, CO, CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <span className='section-padding' />
-      <div style={{ 'page-break-before': 'always' }}></div>
       <h2><span class="heading_2">Rules Configuration</span></h2>
       <br />
       {this.generateRuleConfiguration()}
@@ -230,7 +229,7 @@ export default class Report extends Component {
               <td><span>{device['CoMin']['Value']}</span><br /><span className='time-label'>{device['CoMin']['Datetime']}</span></td>
               <td><span>{device['CoMax']['Value']}</span><br /><span className='time-label'>{device['CoMax']['Datetime']}</span></td>
               <td><span>{device['CoMean']}</span></td>
-              <td><span>{device['CoTD']}</span></td>
+              <td><span>{device['CoSTD']}</span></td>
             </tr> : null
           }
           {showCo2 ?
@@ -377,7 +376,6 @@ export default class Report extends Component {
   async updateChartDataCollection() {
     const res = await axios.post(`dailyreport/${this.date}`);
 
-
     const project = res.data['projects']['1'];
     const aaa = project['AlertAlarmAction'];
     const pm2p5Aaa = aaa['pm2p5_aaa'].split(',');
@@ -395,6 +393,19 @@ export default class Report extends Component {
     let chartDataDict = {};
     for (let device of project['Devices']) {
       axios.post(`chartreport/${device['DeviceID']}/${this.date}`).then(res => {
+
+
+        let showPm2p5 = device['Pm2p5Min']['Value'] || device['Pm2p5Max']['Value'] || device['Pm2p5Mean'] || device['Pm2p5STD'];
+        let showCo = device['CoMin']['Value'] || device['CoMax']['Value'] || device['CoMean'] || device['CoSTD'];
+        let showCo2 = device['Co2Min']['Value'] || device['Co2Max']['Value'] || device['Co2Mean'] || device['Co2STD'];
+        let showC2h2 = device['C2h2Min']['Value'] || device['C2h2Max']['Value'] || device['C2h2Mean'] || device['C2h2STD'];
+        let showTvoc = device['TvocMin']['Value'] || device['TvocMax']['Value'] || device['TvocMean'] || device['TvocSTD'];
+        let showHum = device['HumidityMin']['Value'] || device['HumidityMax']['Value'] || device['HumidityMean'] || device['HumiditySTD'];
+        let showTemp = device['TemperatureMin']['Value'] || device['TemperatureMax']['Value'] || device['TemperatureMean'] || device['TemperatureSTD'];
+        let showPm10 = device['Pm10Min']['Value'] || device['Pm10Max']['Value'] || device['Pm10Mean'] || device['Pm10STD'];
+        let showPm100 = device['Pm100Min']['Value'] || device['Pm100Max']['Value'] || device['Pm100Mean'] || device['Pm100STD'];
+    
+
         let chartDataCollection = [];
 
         let result = res.data['result'];
@@ -409,16 +420,19 @@ export default class Report extends Component {
           let humData = result.map(item => item['humidity']);
           let tempData = result.map(item => item['temperature']);
 
-
+          if (showPm2p5) {
           chartDataCollection.push({ data: ChartData.fromData({ label: 'PM2.5', data: pm2p5Data, aaa: pm2p5Aaa }), label: device['DeviceName'] + ' (PM2.5)', device, unit: unitDict['PM2.5'] });
+          }
 
-          if (device.CoMax.Value > 0) {
+          if (showCo) {
             chartDataCollection.push({ data: ChartData.fromData({ label: 'CO', data: coData, aaa: coAaa }), label: device['DeviceName'] + ' (CO)', device, unit: unitDict['CO'] });
           }
 
+          if (showCo2) {
           chartDataCollection.push({ data: ChartData.fromData({ label: 'CO2', data: co2Data, aaa: co2Aaa }), label: device['DeviceName'] + ' (CO2)', device, unit: unitDict['CO2'] });
+          }
 
-          if (device.C2h2Max.Value > 0) {
+          if (showC2h2) {
             chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device, unit: unitDict['C2H2'] });
           }
 
