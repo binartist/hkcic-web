@@ -54,6 +54,7 @@ export default class Report extends Component {
       <p id="para_remark">Device A monitoring: CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <p id="para_remark">Device B monitoring: C2H2, CO, CO2, PM2.5, TVOC, temperature and relative humidity</p>
       <span className='section-padding' />
+      <div style={{ 'page-break-before': 'always' }}></div>
       <h2><span class="heading_2">Rules Configuration</span></h2>
       <br />
       {this.generateRuleConfiguration()}

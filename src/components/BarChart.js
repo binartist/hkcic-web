@@ -5,14 +5,6 @@ export default function (props) {
     return (<div>
         <Bar data={props.data} options={{
             responsive: true,
-            layout: {
-                padding: {
-                    left: 50,
-                    right: 100,
-                    top: 0,
-                    bottom: 0
-                }
-            },
             scales: {
                 yAxes: [
                     {
