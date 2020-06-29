@@ -7,7 +7,7 @@ export default function (props) {
       responsive: true,
       layout: {
         padding: {
-          left: 50,
+          left: 20,
           right: 100,
           top: 0,
           bottom: 0
@@ -19,7 +19,17 @@ export default function (props) {
             display: true,
             labelString: 'Time (Hour)',
             fontSize: 15
-          }
+          },
+          gridLines: {
+            display:false
+          },
+          ticks: {
+            //max: 120,
+            //min: 0,
+            //stepSize: 6,
+            //unitStepSize: 5,
+            minRotation: 360
+          },  
         }],
         yAxes: [{
           scaleLabel: {

@@ -437,11 +437,25 @@ export default class Report extends Component {
             chartDataCollection.push({ data: ChartData.fromData({ label: 'C2H2', data: c2h2Data, aaa: c2h2Aaa }), label: device['DeviceName'] + ' (C2H2)', device, unit: unitDict['C2H2'] });
           }
 
+          if (showTvoc) {
           chartDataCollection.push({ data: ChartData.fromData({ label: 'TVOC', data: tvocData, aaa: tvocAaa }), label: device['DeviceName'] + ' (TVOC)', device, unit: unitDict['TVOC'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device, unit: unitDict['Humidity'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device, unit: unitDict['Temperature'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device, unit: unitDict['PM10'] });
-          chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device, unit: unitDict['PM100'] });
+          }
+          
+          if (showHum) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'Humidity', data: humData, aaa: humAaa }), label: device['DeviceName'] + ' (Humidity)', device, unit: unitDict['Humidity'] });
+          }
+          
+          if (showTemp) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'Temperature', data: tempData, aaa: tempAaa }), label: device['DeviceName'] + ' (Temperature)', device, unit: unitDict['Temperature'] });
+          }
+
+          if (showPm10) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'PM10', data: pm10Data, aaa: pm10Aaa }), label: device['DeviceName'] + ' (PM10)', device, unit: unitDict['PM10'] });
+          }
+
+          if (showPm100) {
+            chartDataCollection.push({ data: ChartData.fromData({ label: 'PM100', data: pm100Data, aaa: pm100Aaa }), label: device['DeviceName'] + ' (PM100)', device, unit: unitDict['PM100'] });
+          }
 
           chartDataDict[device.DeviceID] = chartDataCollection;
           this.setState({ chartDataDict });
